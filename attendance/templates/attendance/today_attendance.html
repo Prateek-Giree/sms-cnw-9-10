@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Today's Attendance{% endblock %}
+{% block page_label %}Attendance{% endblock %}
+{% block page_title %}Today's Summary: {{ today }} {% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+  <div class="flex justify-end">
+    <div class="flex flex-wrap gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
+      <a href="{% url "attendance-history" %}" class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700">History</a>
+      <a href="{% url "mark-attendance" %}" class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700">Mark Attendance</a>
+    </div>
+  </div>
+
+  <div class="space-y-6">
+    <div class="grid gap-4 md:grid-cols-2">
+      <div class="rounded-3xl border border-emerald-200 bg-emerald-50 p-5">
+        <p class="text-sm font-medium text-emerald-700">Present</p>
+        <p class="mt-2 text-3xl font-semibold text-emerald-900">{{ present }}</p>
+      </div>
+      <div class="rounded-3xl border border-rose-200 bg-rose-50 p-5">
+        <p class="text-sm font-medium text-rose-700">Absent</p>
+        <p class="mt-2 text-3xl font-semibold text-rose-900">{{ absent }}</p>
+      </div>
+    </div>
+
+    <div class="overflow-hidden rounded-2xl border border-slate-200">
+      <table class="min-w-full divide-y divide-slate-200 text-left text-sm">
+        <thead class="bg-slate-50 text-slate-600">
+          <tr>
+            <th class="px-4 py-3 font-semibold">Student</th>
+            <th class="px-4 py-3 font-semibold">Status</th>
+            <th class="px-4 py-3 font-semibold">Time</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200 bg-white">
+          {% for attendance in  attendance_records %}
+          <tr>
+            <td class="px-4 py-3 font-medium text-slate-900">{{ attendance.student.name }}</td>
+            {% if attendance.status == "PRESENT"  %}
+            <td class="px-4 py-3 text-emerald-700">{{ attendance.status }}</td>
+            {% else %}
+            <td class="px-4 py-3 text-red-700">{{ attendance.status }}</td>
+
+            {% endif %}
+            <td class="px-4 py-3">{{ attendance.date }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

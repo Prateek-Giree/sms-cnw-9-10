@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from students.models import ClassRoom
 from django.contrib import messages
+from academics.models import Subject
 
 
 def teacher_login(request):
@@ -29,6 +30,21 @@ def teacher_logout(request):
     logout(request)
     return redirect("login")
 
+
 @login_required
 def dashboard(request):
-    return render(request, "accounts/dashboard.html")
+    classroom = ClassRoom.objects.filter(teacher=request.user).first()
+
+    student_count = 0
+    subject_count = 0
+
+    if classroom:
+        student_count = classroom.students.count()
+        subject_count = Subject.objects.filter(classroom=classroom).count()
+
+    context = {
+        "classroom": classroom,
+        "student_count": student_count,
+        "subject_count": subject_count,
+    }
+    return render(request, "accounts/dashboard.html", context)
