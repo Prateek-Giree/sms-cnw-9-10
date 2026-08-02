@@ -1,39 +1,113 @@
 {% extends 'base.html' %}
 
-{% block title %}Assignment Upload{% endblock %}
+{% block title %}Create Assignment{% endblock %}
 {% block page_label %}Academics{% endblock %}
 {% block page_title %}Create Assignment{% endblock %}
 
 {% block content %}
-<div class="mx-auto max-w-3xl rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-  <form class="space-y-5">
-    <div>
-      <label for="title" class="mb-2 block text-sm font-medium text-slate-700">Title</label>
-      <input id="title" type="text" placeholder="Fractions Practice Worksheet" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition focus:border-slate-400 focus:bg-white" />
+<section class="mx-auto max-w-3xl rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+
+    <div class="mb-6">
+        <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">
+            Assignment Board
+        </p>
+
+        <h2 class="mt-1 text-xl font-semibold text-slate-900">
+            Create a new classroom task
+        </h2>
+
+        {% if classroom %}
+        <p class="mt-2 text-sm text-slate-500">
+            Class: {{ classroom.name }} - {{ classroom.section }}
+        </p>
+        {% endif %}
     </div>
 
-    <div>
-      <label for="subject" class="mb-2 block text-sm font-medium text-slate-700">Subject</label>
-      <select id="subject" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition focus:border-slate-400 focus:bg-white">
-        <option>Mathematics</option>
-        <option>Science</option>
-        <option>English</option>
-      </select>
-    </div>
+    <form method="post" class="space-y-5">
+        {% csrf_token %}
 
-    <div>
-      <label for="description" class="mb-2 block text-sm font-medium text-slate-700">Description</label>
-      <textarea id="description" rows="5" placeholder="Describe the assignment instructions and expectations." class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition focus:border-slate-400 focus:bg-white"></textarea>
-    </div>
+        <div>
+            <label
+                for="title"
+                class="mb-2 block text-sm font-medium text-slate-700"
+            >
+                Title
+            </label>
 
-    <div>
-      <label for="file" class="mb-2 block text-sm font-medium text-slate-700">File Upload</label>
-      <input id="file" type="file" class="w-full rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-500" />
-    </div>
+            <input
+                id="title"
+                name="title"
+                type="text"
+                placeholder="Enter assignment title"
+                class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-slate-400 focus:bg-white"
+                required
+            />
+        </div>
 
-    <div class="flex justify-end">
-      <button type="submit" class="rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white transition hover:bg-slate-800">Upload Assignment</button>
-    </div>
-  </form>
-</div>
+        <div>
+            <label
+                for="subject"
+                class="mb-2 block text-sm font-medium text-slate-700"
+            >
+                Subject
+            </label>
+
+            <select
+                id="subject"
+                name="subject"
+                class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-slate-400 focus:bg-white"
+                required
+            >
+                <option value="">
+                    Select Subject
+                </option>
+
+                {% for subject in subjects %}
+                <option value="{{ subject.id }}">
+                    {{ subject.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label
+                for="description"
+                class="mb-2 block text-sm font-medium text-slate-700"
+            >
+                Description
+            </label>
+
+            <textarea
+                id="description"
+                name="description"
+                rows="5"
+                placeholder="Enter assignment instructions..."
+                class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-slate-400 focus:bg-white"
+            ></textarea>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <p class="text-sm text-slate-500">
+                This assignment will automatically be assigned to:
+            </p>
+
+            <p class="mt-1 font-medium text-slate-900">
+                {{ classroom.name }} - {{ classroom.section }}
+            </p>
+        </div>
+
+        <div class="flex justify-end">
+            <button
+                type="submit"
+                class="rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white transition hover:bg-slate-800"
+            >
+                Save Assignment
+            </button>
+        </div>
+
+    </form>
+
+</section>
 {% endblock %}
+```

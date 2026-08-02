@@ -1,54 +1,100 @@
-{% extends 'base.html' %}
-
-{% block title %}Assignments{% endblock %}
-{% block page_label %}Academics{% endblock %}
-{% block page_title %}Assignments{% endblock %}
-
-{% block content %}
-<div class="space-y-6">
-  <div class="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 md:flex-row md:items-center md:justify-between">
+{% extends 'base.html' %} {% block title %}Assignments{% endblock %}
+{% block page_label %}Academics{% endblock %} 
+{% block page_title %}Assignments{% endblock %} {% block content %}
+<section class="space-y-6">
+  <div
+    class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-slate-50 p-5 shadow-sm md:flex-row md:items-center md:justify-between"
+  >
     <div>
-      <h2 class="text-lg font-semibold text-slate-900">Assignment Board</h2>
-      <p class="text-sm text-slate-500">Track uploaded tasks and their completion status.</p>
+      <p
+        class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500"
+      >
+        Learning Tasks
+      </p>
+
+      <h2 class="mt-1 text-xl font-semibold text-slate-900">
+        Review classroom assignments
+      </h2>
     </div>
-    <a href="#" class="rounded-2xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white">New Assignment</a>
+
+    <div class="flex flex-col gap-3 sm:flex-row">
+      <label
+        class="flex items-center rounded-2xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-600"
+      >
+        <span class="mr-2 text-slate-400">🔎</span>
+        <input
+          type="text"
+          placeholder="Search assignment"
+          class="w-full bg-transparent outline-none"
+        />
+      </label>
+
+      <a
+        href="{% url 'add-assignment' %}"
+        class="rounded-2xl bg-slate-900 px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-slate-800"
+      >
+        Create Assignment
+      </a>
+    </div>
   </div>
 
-  <div class="overflow-hidden rounded-2xl border border-slate-200">
-    <table class="min-w-full divide-y divide-slate-200 text-left text-sm">
-      <thead class="bg-slate-50 text-slate-600">
-        <tr>
-          <th class="px-4 py-3 font-semibold">Title</th>
-          <th class="px-4 py-3 font-semibold">Subject</th>
-          <th class="px-4 py-3 font-semibold">Created Date</th>
-          <th class="px-4 py-3 font-semibold">Status</th>
-          <th class="px-4 py-3 font-semibold">Actions</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-slate-200 bg-white">
-        <tr>
-          <td class="px-4 py-3 font-medium text-slate-900">Fractions Practice Worksheet</td>
-          <td class="px-4 py-3">Mathematics</td>
-          <td class="px-4 py-3">July 28, 2026</td>
-          <td class="px-4 py-3"><span class="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700">Active</span></td>
-          <td class="px-4 py-3"><a href="#" class="text-sm font-medium text-slate-700">View</a></td>
-        </tr>
-        <tr>
-          <td class="px-4 py-3 font-medium text-slate-900">Lab Observation Notes</td>
-          <td class="px-4 py-3">Science</td>
-          <td class="px-4 py-3">July 26, 2026</td>
-          <td class="px-4 py-3"><span class="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-700">Pending Review</span></td>
-          <td class="px-4 py-3"><a href="#" class="text-sm font-medium text-slate-700">View</a></td>
-        </tr>
-        <tr>
-          <td class="px-4 py-3 font-medium text-slate-900">Essay Writing Task</td>
-          <td class="px-4 py-3">English</td>
-          <td class="px-4 py-3">July 20, 2026</td>
-          <td class="px-4 py-3"><span class="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700">Closed</span></td>
-          <td class="px-4 py-3"><a href="#" class="text-sm font-medium text-slate-700">View</a></td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="overflow-hidden rounded-3xl border border-slate-200 shadow-sm">
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-slate-200 text-left text-sm">
+        <thead class="bg-slate-50 text-slate-600">
+          <tr>
+            <th class="px-5 py-3 font-semibold">Title</th>
+            <th class="px-5 py-3 font-semibold">Subject</th>
+            <th class="px-5 py-3 font-semibold">Class</th>
+            <th class="px-5 py-3 font-semibold">Created Date</th>
+            <th class="px-5 py-3 font-semibold">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody class="divide-y divide-slate-200 bg-white">
+          {% for assignment in assignments %}
+          <tr>
+            <td class="px-5 py-3 font-medium text-slate-900">
+              {{ assignment.title }}
+            </td>
+
+            <td class="px-5 py-3">{{ assignment.subject.name }}</td>
+
+            <td class="px-5 py-3">
+              {{ assignment.classroom.name }} {% if assignment.classroom.section%} - {{ assignment.classroom.section }} {% endif %}
+            </td>
+
+            <td class="px-5 py-3">{{ assignment.created_at|date:"M d, Y" }}</td>
+
+            <td class="px-5 py-3">
+              <div class="flex gap-2">
+                <a
+                  href=""
+                  class="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
+                >
+                  Edit
+                </a>
+
+                <a
+                  href=""
+                  class="rounded-full border border-rose-200 px-3 py-1 text-xs font-semibold text-rose-700 transition hover:bg-rose-50"
+                >
+                  Delete
+                </a>
+              </div>
+            </td>
+          </tr>
+
+          {% empty %}
+          <tr>
+            <td colspan="5" class="px-5 py-10 text-center text-slate-500">
+              No assignments found.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
+</section>
 {% endblock %}

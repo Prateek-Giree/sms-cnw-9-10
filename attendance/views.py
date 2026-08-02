@@ -1,7 +1,14 @@
-from django.shortcuts import render
+from django.core.checks import messages
+from django.shortcuts import render, redirect
 from datetime import date
 from .models import Attendance
 from django.db.models import Count, Q
+
+from attendance.models import Attendance
+from students.models import ClassRoom
+from datetime import date
+
+from django.contrib import messages
 
 
 def today_attendance(request):
@@ -23,7 +30,32 @@ def today_attendance(request):
 
 
 def mark_attendance(request):
-    return render(request, "attendance/attendance_form.html")
+    classroom = ClassRoom.objects.filter(teacher=request.user).first()
+    if not classroom:
+        messages.error(request, "No classroom assigned to you.")
+        return redirect("accounts:dashboard")
+    students = classroom.students.all()
+    if request.method == "POST":
+        attendance_date = request.POST.get("date")
+        for student in students:
+            status = request.POST.get(f"student_{student.id}")
+            if not status:
+                continue
+            Attendance.objects.update_or_create(
+                student=student, date=attendance_date, defaults={"status": status}
+            )
+        messages.success(request, "Attendance saved successfully.")
+        return redirect("attendance")
+    context = {
+        "classroom": classroom,
+        "students": students,
+        "today": date.today(),
+    }
+    return render(
+        request,
+        "attendance/attendance_form.html",
+        context,
+    )
 
 
 def attendance_history(request):

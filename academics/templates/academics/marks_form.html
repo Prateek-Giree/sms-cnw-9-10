@@ -1,55 +1,83 @@
 {% extends 'base.html' %}
 
-{% block title %}Marks Entry{% endblock %}
+{% block title %}Add Student Marks{% endblock %}
 {% block page_label %}Academics{% endblock %}
-{% block page_title %}Enter Marks{% endblock %}
+{% block page_title %}Add Student Marks{% endblock %}
 
 {% block content %}
-<div class="space-y-6">
-  <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-    <div class="grid gap-4 md:grid-cols-2">
+<section class="space-y-6">
+  <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 shadow-sm">
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">Assessment Entry</p>
+        <h2 class="mt-1 text-xl font-semibold text-slate-900">Record marks for the current exam cycle</h2>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600">
+        <span class="font-semibold text-slate-900">Class:</span> Grade 7A
+      </div>
+    </div>
+
+    <div class="mt-6 grid gap-4 md:grid-cols-2">
       <div>
         <label for="subject" class="mb-2 block text-sm font-medium text-slate-700">Subject</label>
-        <select id="subject" class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3">
+        <select id="subject" class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-700 outline-none focus:border-slate-400">
           <option>Mathematics</option>
           <option>Science</option>
           <option>English</option>
+          <option>History</option>
         </select>
       </div>
       <div>
         <label for="exam" class="mb-2 block text-sm font-medium text-slate-700">Exam Name</label>
-        <input id="exam" type="text" value="Unit Test 1" class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3" />
+        <input id="exam" type="text" value="Unit Test 1" class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-700 outline-none focus:border-slate-400" />
       </div>
     </div>
   </div>
 
-  <div class="overflow-hidden rounded-2xl border border-slate-200">
-    <table class="min-w-full divide-y divide-slate-200 text-left text-sm">
-      <thead class="bg-slate-50 text-slate-600">
-        <tr>
-          <th class="px-4 py-3 font-semibold">Student Name</th>
-          <th class="px-4 py-3 font-semibold">Marks Obtained</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-slate-200 bg-white">
-        <tr>
-          <td class="px-4 py-3 font-medium text-slate-900">Aarav Sharma</td>
-          <td class="px-4 py-3"><input type="number" value="82" class="w-full max-w-[120px] rounded-2xl border border-slate-200 px-3 py-2" /></td>
-        </tr>
-        <tr>
-          <td class="px-4 py-3 font-medium text-slate-900">Mira Patel</td>
-          <td class="px-4 py-3"><input type="number" value="78" class="w-full max-w-[120px] rounded-2xl border border-slate-200 px-3 py-2" /></td>
-        </tr>
-        <tr>
-          <td class="px-4 py-3 font-medium text-slate-900">Noah Khan</td>
-          <td class="px-4 py-3"><input type="number" value="90" class="w-full max-w-[120px] rounded-2xl border border-slate-200 px-3 py-2" /></td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="overflow-hidden rounded-3xl border border-slate-200 shadow-sm">
+    <div class="border-b border-slate-200 bg-slate-50 px-5 py-4">
+      <h3 class="text-lg font-semibold text-slate-900">Student Performance</h3>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-slate-200 text-left text-sm">
+        <thead class="bg-white text-slate-600">
+          <tr>
+            <th class="px-5 py-3 font-semibold">Student Name</th>
+            <th class="px-5 py-3 font-semibold">Marks Obtained</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200 bg-white">
+          <tr>
+            <td class="px-5 py-3 font-medium text-slate-900">Aarav Sharma</td>
+            <td class="px-5 py-3">
+              <input type="number" value="82" class="w-full max-w-[120px] rounded-2xl border border-slate-200 px-3 py-2 text-slate-700 outline-none focus:border-slate-400" />
+            </td>
+          </tr>
+          <tr>
+            <td class="px-5 py-3 font-medium text-slate-900">Mira Patel</td>
+            <td class="px-5 py-3">
+              <input type="number" value="78" class="w-full max-w-[120px] rounded-2xl border border-slate-200 px-3 py-2 text-slate-700 outline-none focus:border-slate-400" />
+            </td>
+          </tr>
+          <tr>
+            <td class="px-5 py-3 font-medium text-slate-900">Noah Khan</td>
+            <td class="px-5 py-3">
+              <input type="number" value="90" class="w-full max-w-[120px] rounded-2xl border border-slate-200 px-3 py-2 text-slate-700 outline-none focus:border-slate-400" />
+            </td>
+          </tr>
+          <tr>
+            <td class="px-5 py-3 font-medium text-slate-900">Sana Iqbal</td>
+            <td class="px-5 py-3">
+              <input type="number" value="88" class="w-full max-w-[120px] rounded-2xl border border-slate-200 px-3 py-2 text-slate-700 outline-none focus:border-slate-400" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <div class="flex justify-end">
     <button type="submit" class="rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white transition hover:bg-slate-800">Save Marks</button>
   </div>
-</div>
+</section>
 {% endblock %}
