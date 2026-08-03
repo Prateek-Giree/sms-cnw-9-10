@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% block title %}Add Student Marks
-{% endblock %} {% block page_label %}Academics{% endblock %} 
+{% endblock %} {% block page_label %}Academics{% endblock %}
 {% block page_title %}Add Student Marks{% endblock %} {% block content %}
 
 <form method="post">
@@ -7,13 +7,9 @@
 
   <section class="space-y-6">
     <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 shadow-sm">
-      <div
-        class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
-      >
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p
-            class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500"
-          >
+          <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">
             Assessment Entry
           </p>
 
@@ -22,55 +18,33 @@
           </h2>
         </div>
 
-        <div
-          class="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600"
-        >
-          <span class="font-semibold text-slate-900"> Class: </span>
-
-          {{ classroom.name }} {% if classroom.section %} - {{ classroom.section
-          }} {% endif %}
+        <div class="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600">
+          <span class="font-semibold text-slate-900"> Class: {{ classroom }} </span>
         </div>
       </div>
 
       <div class="mt-6 grid gap-4 md:grid-cols-2">
         <div>
-          <label
-            for="subject"
-            class="mb-2 block text-sm font-medium text-slate-700"
-          >
+          <label for="subject" class="mb-2 block text-sm font-medium text-slate-700">
             Subject
           </label>
 
-          <select
-            id="subject"
-            name="subject"
-            required
-            class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-700 outline-none focus:border-slate-400"
-          >
+          <select id="subject" name="subject" required
+            class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-700 outline-none focus:border-slate-400">
             <option value="">Select Subject</option>
-
-            {% for subject in subjects %}
-            <option value="{{ subject.id }}">{{ subject.name }}</option>
+            {% for subject in subjects  %}
+              <option value="{{ subject.id }}">{{ subject.name }}</option>
             {% endfor %}
           </select>
         </div>
 
         <div>
-          <label
-            for="exam_name"
-            class="mb-2 block text-sm font-medium text-slate-700"
-          >
+          <label for="exam_name" class="mb-2 block text-sm font-medium text-slate-700">
             Exam Name
           </label>
 
-          <input
-            id="exam_name"
-            name="exam_name"
-            type="text"
-            placeholder="e.g. First Terminal Exam"
-            required
-            class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-700 outline-none focus:border-slate-400"
-          />
+          <input id="exam_name" name="exam_name" type="text" placeholder="e.g. First Terminal Exam" required
+            class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-700 outline-none focus:border-slate-400" />
         </div>
       </div>
     </div>
@@ -100,37 +74,30 @@
               </td>
 
               <td class="px-5 py-3">
-                <input
-                  type="number"
-                  name="student_{{ student.id }}"
-                  min="0"
-                  max="100"
-                  placeholder="Enter marks"
-                  class="w-full max-w-[140px] rounded-2xl border border-slate-200 px-3 py-2 text-slate-700 outline-none focus:border-slate-400"
-                />
+                <input type="number" name="student_{{ student.id }}" min="0" max="100" placeholder="Enter marks"
+                  class="w-full max-w-[140px] rounded-2xl border border-slate-200 px-3 py-2 text-slate-700 outline-none focus:border-slate-400" />
               </td>
             </tr>
+            
             {% empty %}
             <tr>
               <td colspan="2" class="px-5 py-8 text-center text-slate-500">
                 No students found in this class.
               </td>
             </tr>
-            {% endfor %}
+          {% endfor %}
           </tbody>
         </table>
       </div>
     </div>
 
     <div class="flex justify-end">
-      <button
-        type="submit"
-        class="rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white transition hover:bg-slate-800"
-      >
+      <button type="submit"
+        class="rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white transition hover:bg-slate-800">
         Save Marks
       </button>
     </div>
   </section>
 </form>
 
-{% endblock %} ```
+{% endblock %}

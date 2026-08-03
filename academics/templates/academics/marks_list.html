@@ -21,7 +21,13 @@
         </h2>
       </div>
 
-      <form method="get" class="flex flex-col gap-3 sm:flex-row sm:items-end">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-end">
+        <a href="{% url 'add-marks' %}"
+          class="rounded-2xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800">
+          Add Marks
+        </a>
+
+        <form method="get" class="flex flex-col gap-3 sm:flex-row sm:items-end">
 
         <div>
           <label for="subject" class="mb-2 block text-sm font-medium text-slate-700">
@@ -68,7 +74,8 @@
           </button>
         </div>
 
-      </form>
+        </form>
+      </div>
 
     </div>
 
