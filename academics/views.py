@@ -114,10 +114,9 @@ def view_marks(request):
 
 def report_card(request, student_id, exam_name):
     student = get_object_or_404(
-        Student.objects.select_related("classroom__teacher"),
+        Student.objects.select_related("classroom__teacher"), 
         pk=student_id,
     )
-
     marks = (
         Marks.objects.filter(student=student, exam_name=exam_name)
         .select_related("subject", "student__classroom")
@@ -132,7 +131,6 @@ def report_card(request, student_id, exam_name):
         full_marks = mark.full_marks or 0
         obtained_marks = mark.marks_obtained or 0
         percentage = round((obtained_marks / full_marks) * 100, 2) if full_marks else 0
-
         total_full_marks += full_marks
         total_obtained_marks += obtained_marks
 
@@ -145,46 +143,50 @@ def report_card(request, student_id, exam_name):
             }
         )
 
-    overall_percentage = (
-        round((total_obtained_marks / total_full_marks) * 100, 2)
-        if total_full_marks
-        else 0
-    )
+        overall_percentage = (
+            round((total_obtained_marks / total_full_marks) * 100, 2)
+            if total_full_marks
+            else 0
+        )
 
-    if overall_percentage >= 90:
-        grade = "A+"
-    elif overall_percentage >= 80:
-        grade = "A"
-    elif overall_percentage >= 70:
-        grade = "B+"
-    elif overall_percentage >= 60:
-        grade = "B"
-    elif overall_percentage >= 50:
-        grade = "C"
-    else:
-        grade = "F"
+        if overall_percentage >= 90:
+            grade = "A+"
+        elif overall_percentage >= 80:
+            grade = "A"
+        elif overall_percentage >= 70:
+            grade = "B+"
+        elif overall_percentage >= 60:
+            grade = "B"
+        elif overall_percentage >= 50:
+            grade = "C"
+        else:
+            grade = "F"
 
-    if overall_percentage >= 40:
-        result = "PASS"
-    else:
-        result = "FAIL"
+        if overall_percentage>=40:
+            result="PASS"
+        else:
+            result="FAIL"
 
-    if overall_percentage >= 90:
-        remarks = "Outstanding performance."
-    elif overall_percentage >= 80:
-        remarks = "Excellent work."
-    elif overall_percentage >= 70:
-        remarks = "Very good performance."
-    elif overall_percentage >= 60:
-        remarks = "Good effort."
-    elif overall_percentage >= 50:
-        remarks = "Satisfactory performance."
-    else:
-        remarks = "Needs improvement."
+            
+        if overall_percentage >= 90:
+            remarks = "Outstanding Performance"
+        elif overall_percentage >= 80:
+            remarks = "Excellent Work"
+        elif overall_percentage >= 70:
+            remarks = "Very Good Performance"
+
+        elif overall_percentage >= 60:
+            remarks = "Good Effort"
+
+        elif overall_percentage >= 50:
+            remarks = "Satisfactory"
+
+        else:
+            remarks = "Needs Improvement"
 
     context = {
-        "school_name": "Greenwood Academy",
-        "school_address": "42 River Street, North Town, Lahore, Pakistan",
+        "school_name": "XYZ School",
+        "school_address": "Chitwan, Nepal",
         "report_title": "Report Card",
         "academic_session": "2026",
         "student": student,
@@ -194,12 +196,16 @@ def report_card(request, student_id, exam_name):
         "total_obtained_marks": total_obtained_marks,
         "overall_percentage": overall_percentage,
         "grade": grade,
-        "result": result,
+        "result":result,
         "remarks": remarks,
-        "class_teacher": student.classroom.teacher.get_full_name() or student.classroom.teacher.username if student.classroom.teacher else "Class Teacher",
-        "principal_name": "Mr. Imran Hassan",
+        "class_teacher": (
+            student.classroom.teacher.get_full_name()
+            or student.classroom.teacher.username
+            if student.classroom.teacher
+            else "Class Teacher"
+        ),
+        "principal_name": "Prateek",
     }
-
     return render(request, "academics/report_card.html", context)
 
 
@@ -229,6 +235,7 @@ def student_results(request):
 
     for student in students:
         marks_qs = Marks.objects.filter(student=student)
+
         if selected_exam:
             marks_qs = marks_qs.filter(exam_name=selected_exam)
 
@@ -267,12 +274,20 @@ def student_results(request):
                 "obtained_marks": total_obtained_marks,
                 "percentage": percentage,
                 "grade": grade,
-                "report_url": reverse(
-                    "report-card",
-                    kwargs={"student_id": student.id, "exam_name": selected_exam or ""},
-                )
-                if selected_exam
-                else reverse("report-card", kwargs={"student_id": student.id, "exam_name": "Mid-Term"}),
+                "report_url": (
+                    reverse(
+                        "report-card",
+                        kwargs={
+                            "student_id": student.id,
+                            "exam_name": selected_exam or "",
+                        },
+                    )
+                    if selected_exam
+                    else reverse(
+                        "report-card",
+                        kwargs={"student_id": student.id, "exam_name": "Mid-Term"},
+                    )
+                ),
             }
         )
 
