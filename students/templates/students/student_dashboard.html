@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  <body class="min-h-screen bg-slate-50 text-slate-800">
+    <div class="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-slate-100 px-4 py-8 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-7xl space-y-6">
+        <div class="rounded-[2rem] border border-slate-200 bg-white/90 p-6 shadow-sm sm:p-8">
+          <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">Student Profile</p>
+              <h2 class="mt-2 text-3xl font-semibold text-slate-900">{{ student.name }}</h2>
+              <div class="mt-4 flex flex-wrap gap-3 text-sm text-slate-600">
+                <span class="rounded-full border border-slate-200 bg-slate-50 px-3 py-2">Student ID: {{ student.id }}</span>
+                <span class="rounded-full border border-slate-200 bg-slate-50 px-3 py-2">Class: {{ classroom.name }}</span>
+                <span class="rounded-full border border-slate-200 bg-slate-50 px-3 py-2">Section: {{ classroom.section }}</span>
+              </div>
+            </div>
+            <a href="{% url 'student-report-card' student_id=student.id exam_name=report_exam %}" class="rounded-2xl border border-emerald-200 bg-emerald-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700">
+              View Report Card
+            </a>
+          </div>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div class="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm">
+            <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">Overall Percentage</p>
+            <p class="mt-3 text-3xl font-semibold text-slate-900">{{ overall_percentage }}%</p>
+          </div>
+          <div class="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm">
+            <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">Attendance</p>
+            <p class="mt-3 text-3xl font-semibold text-slate-900">{{ attendance_percentage }}%</p>
+          </div>
+          <div class="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm">
+            <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">Subjects</p>
+            <p class="mt-3 text-3xl font-semibold text-slate-900">{{ subject_count }}</p>
+          </div>
+          <div class="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm">
+            <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">Assignments</p>
+            <p class="mt-3 text-3xl font-semibold text-slate-900">{{ assignment_count }}</p>
+          </div>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-3">
+          <a href="{% url 'student-marks' student_id=student.id %}" class="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">View Marks</p>
+                <h3 class="mt-2 text-xl font-semibold text-slate-900">Academic Performance</h3>
+              </div>
+              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700">
+                <i class="fa-solid fa-square-poll-vertical"></i>
+              </div>
+            </div>
+          </a>
+
+          <a href="{% url 'student-attendance' student_id=student.id %}" class="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">View Attendance</p>
+                <h3 class="mt-2 text-xl font-semibold text-slate-900">Attendance Record</h3>
+              </div>
+              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-700">
+                <i class="fa-solid fa-clipboard-list"></i>
+              </div>
+            </div>
+          </a>
+
+          <a href="{% url 'student-report-card' student_id=student.id exam_name=report_exam %}" class="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">View Report Card</p>
+                <h3 class="mt-2 text-xl font-semibold text-slate-900">Progress Summary</h3>
+              </div>
+              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-amber-700">
+                <i class="fa-solid fa-file-lines"></i>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
